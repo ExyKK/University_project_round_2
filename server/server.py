@@ -18,7 +18,7 @@ elastic_search.init(elastic)
 def execute_query(phrase, periodStart, periodEnd):
     ids = elastic_search.get_ids(elastic, phrase)
 
-    # найти всех студентов, которые посещали занятия в заданном промежутке и материалы которых содержат заданный phrase
+    # найти всех студентов, которые посещали занятия в заданном промежутке и материалы которых содержат заданный phrase!!!
     query = f"""SELECT students.full_name, groups.group_code, specialities.naming, specialities.code
                 FROM journal JOIN lessons ON lessons.id = journal.lesson_id, students
                 JOIN groups ON groups.id = students.group_id
