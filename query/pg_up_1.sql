@@ -31,6 +31,7 @@ CREATE TABLE students(
 );
 
 CREATE TABLE schedule(
+    id SERIAL PRIMARY KEY,
     lesson_id INT NOT NULL,
     group_id INT NOT NULL,
     FOREIGN KEY (lesson_id) REFERENCES lessons(id),
@@ -44,3 +45,12 @@ CREATE TABLE journal(
     FOREIGN KEY (stud_id) REFERENCES students(id),
     FOREIGN KEY (lesson_id) REFERENCES lessons(id)
 );
+
+SELECT pg_create_logical_replication_slot('pub_slot', 'pgoutput');
+
+CREATE SUBSCRIPTION subscription
+CONNECTION 'host=postgre_db port=5432 dbname=University user=root password=tohi231'
+PUBLICATION my_publication
+WITH (slot_name = pub_slot, create_slot = false);
+
+CREATE PUBLICATION my_publication FOR TABLE groups, students, lessons, schedule, specialities, journal;

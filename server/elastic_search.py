@@ -1,4 +1,5 @@
 def init(es):
+    es.indices.create(index='lessons', ignore=400)
     es.index(index='lessons',
               id=1, 
               body={
@@ -77,4 +78,6 @@ def get_ids(es, text):
 
     if len(ids) == 0:
         return [-1, -1]
+    if len(ids) == 1:
+        ids.append(-1)
     return ids
